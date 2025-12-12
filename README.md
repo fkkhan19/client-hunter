@@ -88,7 +88,7 @@ Rejects fully professional sites
 Shows all leads in an organized UI.
 
 🛠 Installation
-git clone https://github.com/your-username/client-hunter
+git clone https://github.com/fkkhan19/client-hunter
 cd client-hunter
 pip install -r requirements.txt
 playwright install
