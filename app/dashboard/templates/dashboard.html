@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Hunter Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('dashboard.static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<!-- TOP NAVBAR -->
+<nav class="navbar">
+    <div class="logo">ClientHunter</div>
+    <div class="nav-links">
+        <a href="/">Dashboard</a>
+        <a href="/messages">Messages</a>
+        <a href="/stats">Stats</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- KPI CARDS -->
+    <section class="kpi-section">
+        <div class="card">
+            <h3>Total Leads</h3>
+            <p>{{ total_leads }}</p>
+        </div>
+        <div class="card">
+            <h3>New Leads</h3>
+            <p>{{ new_leads }}</p>
+        </div>
+        <div class="card">
+            <h3>Messages Sent</h3>
+            <p>{{ messages_sent }}</p>
+        </div>
+    </section>
+
+    <!-- DATE FILTERS -->
+    <section class="filter-section">
+        <a href="/?range=today" class="filter-btn">Today</a>
+        <a href="/?range=yesterday" class="filter-btn">Yesterday</a>
+        <a href="/?range=7" class="filter-btn">Last 7 Days</a>
+        <a href="/?range=30" class="filter-btn">Last 30 Days</a>
+        <a href="/" class="filter-btn">All</a>
+    </section>
+
+    <!-- CHARTS -->
+    <section class="graph-section">
+        <h2>Lead Growth</h2>
+        <canvas id="leadChart"></canvas>
+
+        <h2>Messages Sent</h2>
+        <canvas id="messageChart"></canvas>
+    </section>
+
+    <!-- MULTI DELETE FORM -->
+    <form method="POST" action="/delete_multiple">
+
+        <h2 class="section-title">Leads</h2>
+
+        <button type="submit" class="delete-selected-btn">Delete Selected</button>
+<input type="text" id="searchInput" placeholder="Search leads..." onkeyup="filterLeads()">
+
+        <table class="lead-table">
+            <div id="pagination"></div>
+
+            <thead>
+                <tr>
+                    <th><input type="checkbox" onclick="toggleAll(this)"></th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Priority</th>
+                    <th>Contact</th>
+                    <th>Website</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for lead in leads %}
+                <tr>
+                    <td><input type="checkbox" name="lead_ids" value="{{ lead.id }}"></td>
+
+                    <td>{{ lead.name }}</td>
+                    <td>{{ lead.category }}</td>
+                    <td>{{ lead.location }}</td>
+                    <td>{{ lead.priority_score }}</td>
+                    <td>{{ lead.contact or 'N/A' }}</td>
+                    <td><a href="{{ lead.website }}" target="_blank">Visit</a></td>
+
+                    <td>
+                        <button class="send-btn"
+                                onclick="openMessageForm({{ lead.id }}, '{{ lead.name }}')">
+                            Send
+                        </button>
+
+                        <a class="delete-btn" href="/delete_lead/{{ lead.id }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<!-- MESSAGE MODAL -->
+<div id="messageModal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalLeadName"></h3>
+
+        <form method="POST" action="/send_message">
+            <input type="hidden" name="lead_id" id="modalLeadId">
+
+            <textarea name="message" placeholder="Enter message..."></textarea>
+
+            <select name="channel">
+                <option value="email">Email</option>
+                <option value="whatsapp">WhatsApp</option>
+            </select>
+
+            <button type="submit" class="modal-send-btn">Send</button>
+        </form>
+
+        <button class="modal-close" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<script>
+function openMessageForm(id, name) {
+    document.getElementById("modalLeadId").value = id;
+    document.getElementById("modalLeadName").innerText = "Send to " + name;
+    document.getElementById("messageModal").style.display = "flex";
+}
+function closeModal() {
+    document.getElementById("messageModal").style.display = "none";
+}
+function toggleAll(src) {
+    document.querySelectorAll("input[name='lead_ids']")
+        .forEach(cb => cb.checked = src.checked);
+}
+</script>
+<script src="{{ url_for('dashboard.static', filename='js/main.js') }}"></script>
+<script>
+    paginateTable();
+</script>
+
+</body>
+</html>

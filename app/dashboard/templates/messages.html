@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Message Logs</title>
+    <link rel="stylesheet" href="{{ url_for('dashboard.static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">ClientHunter</div>
+    <div class="nav-links">
+        <a href="/">Dashboard</a>
+        <a href="/messages" class="active">Messages</a>
+        <a href="/stats">Stats</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Messages Sent</h1>
+
+    <table class="lead-table">
+        <thead>
+            <tr>
+                <th>Lead</th>
+                <th>Channel</th>
+                <th>Message</th>
+                <th>Sent At</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for msg in messages %}
+            <tr>
+                <td>{{ msg.lead.name }}</td>
+                <td>{{ msg.channel }}</td>
+                <td>{{ msg.content }}</td>
+                <td>{{ msg.sent_at }}</td>
+                <td>{{ msg.status }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

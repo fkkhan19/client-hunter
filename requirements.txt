@@ -1,0 +1,11 @@
+Flask
+Flask-SQLAlchemy
+requests
+beautifulsoup4
+instaloader
+twilio
+selenium
+gunicorn
+celery
+redis
+playwright>=1.35.0

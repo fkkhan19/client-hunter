@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistics</title>
+    <link rel="stylesheet" href="{{ url_for('dashboard.static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">ClientHunter</div>
+    <div class="nav-links">
+        <a href="/">Dashboard</a>
+        <a href="/messages">Messages</a>
+        <a href="/stats" class="active">Stats</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <section class="kpi-section">
+        <div class="card">
+            <h3>Total Leads</h3>
+            <p>{{ total_leads }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Messages Sent</h3>
+            <p>{{ messages_sent }}</p>
+        </div>
+    </section>
+
+    <section class="graph-section">
+        <h2>Lead Growth</h2>
+        <canvas id="leadChart"></canvas>
+
+        <h2>Messages Sent</h2>
+        <canvas id="msgChart"></canvas>
+    </section>
+
+</div>
+
+<script>
+// Example chart data (replace with real data later)
+new Chart(document.getElementById("leadChart"), {
+    type: "line",
+    data: {
+        labels: {{ lead_dates | safe }},
+        datasets: [{
+            label: "New Leads",
+            data: {{ lead_counts | safe }}
+        }]
+    }
+});
+</script>
+
+</body>
+</html>
