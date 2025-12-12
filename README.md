@@ -1,4 +1,6 @@
 🔥 Client Hunter — Automated Lead Generation System
+Topics:lead-generation automation google-maps-scraper playwright python flask apscheduler web-scraping client-hunter open-source
+
 <!-- Badges --> <p align="center"> <img src="https://img.shields.io/badge/Python-3.10%2B-blue" /> <img src="https://img.shields.io/badge/Flask-API%20Backend-black" /> <img src="https://img.shields.io/badge/Playwright-Scraping-green" /> <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a> <img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen" /> <img src="https://img.shields.io/github/issues/your-username/client-hunter" /> <img src="https://img.shields.io/github/stars/your-username/client-hunter?style=social" /> <img src="https://img.shields.io/github/last-commit/your-username/client-hunter" /> </p>
 🚀 Overview
 
@@ -125,3 +127,4 @@ Just open a Pull Request 😄
 📄 License
 
 MIT — free to use, modify, and distribute.
+
